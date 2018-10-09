@@ -1,7 +1,7 @@
 package com.fly.learn.proxy.jdk.test;
 
-import com.fly.learn.proxy.jdk.Person;
-import com.fly.learn.proxy.jdk.PersonImpl;
+import com.fly.learn.proxy.Person;
+import com.fly.learn.proxy.PersonImpl;
 
 import java.lang.reflect.Proxy;
 import java.math.BigDecimal;

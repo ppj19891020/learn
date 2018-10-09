@@ -1,4 +1,4 @@
-package com.fly.learn.proxy.jdk;
+package com.fly.learn.proxy;
 
 import java.math.BigDecimal;
 
