@@ -9,7 +9,7 @@ public class MethodFactoryTest {
 
     public static void main(String[] args) {
         Factory carFactory = new CarFactory();
-        carFactory.get().productMethod();
+        carFactory.get().methodSame();
     }
 
 }

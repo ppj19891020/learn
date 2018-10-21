@@ -9,8 +9,8 @@ public class ProductFactoryTest {
 
     public static void main(String[] args) {
         try {
-            ProductFactory.createProduct("tv").productMethod();
-            ProductFactory.createProduct("car").productMethod();
+            ProductFactory.createProduct("tv").methodSame();
+            ProductFactory.createProduct("car").methodSame();
         } catch (Exception e) {
             e.printStackTrace();
         }
