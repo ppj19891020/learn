@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 线程池test
@@ -22,10 +23,12 @@ public class ThreadPoolExecutorTest {
     //private static Executor executor = Executors.newCachedThreadPool();
     private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
 
+    private AtomicInteger i = new AtomicInteger(0);
+
     public void executeTask(){
         Task1 task1 = new Task1();//构建任务
 //        executor.execute(task1);//执行任务
-        executor.scheduleAtFixedRate(task1,0,5,TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(task1,0,1,TimeUnit.SECONDS);
     }
 
     /*
@@ -34,15 +37,14 @@ public class ThreadPoolExecutorTest {
     class Task1 implements Runnable{
         public void run() {
             //具体任务的业务
-            for(int i=0;i<1000;i++){
-                LOGGER.info("{}...",i);
-            }
+            LOGGER.info("{}...",i.incrementAndGet());
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ThreadPoolExecutorTest test = new ThreadPoolExecutorTest();
         test.executeTask();
+        Thread.sleep(100000L);
         executor.shutdown();
         while (!executor.isTerminated()){
             LOGGER.info("finish......");
