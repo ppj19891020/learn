@@ -3,9 +3,10 @@ package com.fly.learn.executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池test
@@ -19,15 +20,16 @@ public class ThreadPoolExecutorTest {
     //private static Executor executor = Executors.newFixedThreadPool(5);
     //private static Executor executor = Executors.newSingleThreadExecutor();
     //private static Executor executor = Executors.newCachedThreadPool();
-    private static ExecutorService executor = Executors.newScheduledThreadPool(5);
+    private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
 
     public void executeTask(){
         Task1 task1 = new Task1();//构建任务
-        executor.execute(task1);//执行任务
+//        executor.execute(task1);//执行任务
+        executor.scheduleAtFixedRate(task1,0,5,TimeUnit.SECONDS);
     }
 
     /*
-     * 基本任务2
+     * 基本任务
      */
     class Task1 implements Runnable{
         public void run() {
@@ -37,6 +39,7 @@ public class ThreadPoolExecutorTest {
             }
         }
     }
+
     public static void main(String[] args) {
         ThreadPoolExecutorTest test = new ThreadPoolExecutorTest();
         test.executeTask();
