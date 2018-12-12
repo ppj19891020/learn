@@ -63,6 +63,7 @@ public class FuthreTest {
                 return "ok";
             }
         });
+        executorService.submit(futureTask);
 
         LOGGER.info("task one " + futureOne.get());
         LOGGER.info("task two " + futureTwo.get());
