@@ -15,21 +15,21 @@ import java.util.Set;
 public class Server {
 
     private Selector selector;
-    private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//µ÷Õû»º´æµÄ´óĞ¡¿ÉÒÔ¿´µ½´òÓ¡Êä³öµÄ±ä»¯
-    private ByteBuffer sendBuffer = ByteBuffer.allocate(1024);//µ÷Õû»º´æµÄ´óĞ¡¿ÉÒÔ¿´µ½´òÓ¡Êä³öµÄ±ä»¯
+    private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//è°ƒæ•´ç¼“å­˜çš„å¤§å°å¯ä»¥çœ‹åˆ°æ‰“å°è¾“å‡ºçš„å˜åŒ–
+    private ByteBuffer sendBuffer = ByteBuffer.allocate(1024);//è°ƒæ•´ç¼“å­˜çš„å¤§å°å¯ä»¥çœ‹åˆ°æ‰“å°è¾“å‡ºçš„å˜åŒ–
 
     String str;
     public void start() throws IOException {
-        // ´ò¿ª·şÎñÆ÷Ì×½Ó×ÖÍ¨µÀ
+        // æ‰“å¼€æœåŠ¡å™¨å¥—æ¥å­—é€šé“
         ServerSocketChannel ssc = ServerSocketChannel.open();
-        // ·şÎñÆ÷ÅäÖÃÎª·Ç×èÈû
+        // æœåŠ¡å™¨é…ç½®ä¸ºéé˜»å¡
         ssc.configureBlocking(false);
-        // ½øĞĞ·şÎñµÄ°ó¶¨
+        // è¿›è¡ŒæœåŠ¡çš„ç»‘å®š
         ssc.bind(new InetSocketAddress("localhost", 9999));
 
-        // Í¨¹ıopen()·½·¨ÕÒµ½Selector
+        // é€šè¿‡open()æ–¹æ³•æ‰¾åˆ°Selector
         selector = Selector.open();
-        // ×¢²áµ½selector£¬µÈ´ıÁ¬½Ó
+        // æ³¨å†Œåˆ°selectorï¼Œç­‰å¾…è¿æ¥
         ssc.register(selector, SelectionKey.OP_ACCEPT);
 
         while (!Thread.currentThread().isInterrupted()) {
@@ -48,7 +48,7 @@ public class Server {
                 } else if (key.isWritable()) {
                     write(key);
                 }
-                keyIterator.remove(); //¸ÃÊÂ¼şÒÑ¾­´¦Àí£¬¿ÉÒÔ¶ªÆú
+                keyIterator.remove(); //è¯¥äº‹ä»¶å·²ç»å¤„ç†ï¼Œå¯ä»¥ä¸¢å¼ƒ
             }
         }
     }

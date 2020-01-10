@@ -13,22 +13,18 @@ import java.util.Iterator;
 import java.util.Set;
 
 /*
-
-µ¥Ïß³ÌµÄÊµÏÖ
-Server¶ËÓÃÒ»¸öSelectorÀûÓÃÒ»¸öÏß³Ì£¨ÔÚmain·½·¨ÀïÃæstart£©À´ÏìÓ¦ËùÓĞÇëÇó
-1.µ±ACCEPTÊÂ¼ş¾ÍĞ÷£¬Acceptor±»Ñ¡ÖĞ£¬Ö´ĞĞËüµÄrun·½·¨£º´´½¨Ò»¸öHandler£¨ÀıÈçÎªhandlerA£©£¬²¢½«HandlerµÄinterestOps³õÊ¼ÎªREAD
-2.µ±READÊÂ¼ş¾ÍĞ÷£¬handlerA±»Ñ¡ÖĞ£¬Ö´ĞĞËüµÄrun·½·¨£ºËü¸ù¾İ×ÔÉíµÄµ±Ç°×´Ì¬£¬À´Ö´ĞĞ¶Á»òĞ´²Ù×÷
-Òò´Ë£¬Ã¿Ò»¸öClientÁ¬½Ó¹ıÀ´£¬Server¾Í´´½¨Ò»¸öHandler£¬µ«¶¼ËùÓĞ²Ù×÷¶¼ÔÚÒ»¸öÏß³ÌÀïÃæ
-
+å•çº¿ç¨‹çš„å®ç°
+Serverç«¯ç”¨ä¸€ä¸ªSelectoråˆ©ç”¨ä¸€ä¸ªçº¿ç¨‹ï¼ˆåœ¨mainæ–¹æ³•é‡Œé¢startï¼‰æ¥å“åº”æ‰€æœ‰è¯·æ±‚
+1.å½“ACCEPTäº‹ä»¶å°±ç»ªï¼ŒAcceptorè¢«é€‰ä¸­ï¼Œæ‰§è¡Œå®ƒçš„runæ–¹æ³•ï¼šåˆ›å»ºä¸€ä¸ªHandlerï¼ˆä¾‹å¦‚ä¸ºhandlerAï¼‰ï¼Œå¹¶å°†Handlerçš„interestOpsåˆå§‹ä¸ºREAD
+2.å½“READäº‹ä»¶å°±ç»ªï¼ŒhandlerAè¢«é€‰ä¸­ï¼Œæ‰§è¡Œå®ƒçš„runæ–¹æ³•ï¼šå®ƒæ ¹æ®è‡ªèº«çš„å½“å‰çŠ¶æ€ï¼Œæ¥æ‰§è¡Œè¯»æˆ–å†™æ“ä½œ
+å› æ­¤ï¼Œæ¯ä¸€ä¸ªClientè¿æ¥è¿‡æ¥ï¼ŒServerå°±åˆ›å»ºä¸€ä¸ªHandlerï¼Œä½†éƒ½æ‰€æœ‰æ“ä½œéƒ½åœ¨ä¸€ä¸ªçº¿ç¨‹é‡Œé¢
 Selection Key   Channel                 Handler     Interested Operation
 ------------------------------------------------------------------------
 SelectionKey 0  ServerSocketChannel     Acceptor    Accept
 SelectionKey 1  SocketChannel 1         Handler 1   Read and Write
 SelectionKey 2  SocketChannel 2         Handler 2   Read and Write
 SelectionKey 3  SocketChannel 3         Handler 3   Read and Write
-
-Èç¹û²ÉÓÃ¶à¸öselector£¬ÄÇ¾ÍÊÇËùÎ½µÄ¡°Multiple Reactor Threads¡±£¬´óÌåË¼Â·ÈçÏÂ£º
-
+å¦‚æœé‡‡ç”¨å¤šä¸ªselectorï¼Œé‚£å°±æ˜¯æ‰€è°“çš„â€œMultiple Reactor Threadsâ€ï¼Œå¤§ä½“æ€è·¯å¦‚ä¸‹ï¼š
 Selector[] selectors; // also create threads
 int next = 0;
 class Acceptor { // ...
@@ -98,7 +94,7 @@ public class Reactor implements Runnable{
     }
 
     /**
-     * /´ÓSelectionKeyÖĞÈ¡³öHandler²¢Ö´ĞĞHandlerµÄrun·½·¨£¬Ã»ÓĞ´´½¨ĞÂÏß³Ì
+     * /ä»SelectionKeyä¸­å–å‡ºHandlerå¹¶æ‰§è¡ŒHandlerçš„runæ–¹æ³•ï¼Œæ²¡æœ‰åˆ›å»ºæ–°çº¿ç¨‹
      * @param key
      */
     void dispatch(SelectionKey key){

@@ -11,12 +11,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * ¶àÏß³Ì°æ±¾µÄHandler
- * Ë¼Â·¾ÍÊÇ°ÑºÄÊ±µÄ²Ù×÷£¨·ÇIO²Ù×÷£©·Åµ½ÆäËûÏß³ÌÀïÃæÅÜ£¬
- * Ê¹µÃHandlerÖ»×¨×¢ÓëChannelÖ®¼äµÄIO²Ù×÷£»
- * Handler¿ìËÙµØ´ÓChannelÖĞ¶Á»òĞ´£¬¿ÉÒÔÊ¹Channel¼°Ê±µØ¡¢¸ü¿ìµØÏìÓ¦ÆäËûÇëÇó
- * ºÄÊ±µÄ²Ù×÷Íê³Éºó£¬²úÉúÒ»¸öÊÂ¼ş£¨¸Ä±ästate£©£¬ÔÙ¡°Í¨Öª¡±£¨ÓÉHandlerÂÖÑ¯Õâ¸ö×´Ì¬ÊÇ·ñÓĞ¸Ä±ä£©
- * HandlerÖ´ĞĞChannelµÄ¶ÁĞ´²Ù×÷
+ * å¤šçº¿ç¨‹ç‰ˆæœ¬çš„Handler
+ * æ€è·¯å°±æ˜¯æŠŠè€—æ—¶çš„æ“ä½œï¼ˆéIOæ“ä½œï¼‰æ”¾åˆ°å…¶ä»–çº¿ç¨‹é‡Œé¢è·‘ï¼Œ
+ * ä½¿å¾—Handleråªä¸“æ³¨ä¸Channelä¹‹é—´çš„IOæ“ä½œï¼›
+ * Handlerå¿«é€Ÿåœ°ä»Channelä¸­è¯»æˆ–å†™ï¼Œå¯ä»¥ä½¿ChannelåŠæ—¶åœ°ã€æ›´å¿«åœ°å“åº”å…¶ä»–è¯·æ±‚
+ * è€—æ—¶çš„æ“ä½œå®Œæˆåï¼Œäº§ç”Ÿä¸€ä¸ªäº‹ä»¶ï¼ˆæ”¹å˜stateï¼‰ï¼Œå†â€œé€šçŸ¥â€ï¼ˆç”±Handlerè½®è¯¢è¿™ä¸ªçŠ¶æ€æ˜¯å¦æœ‰æ”¹å˜ï¼‰
+ * Handleræ‰§è¡ŒChannelçš„è¯»å†™æ“ä½œ
  * @author: peijiepang
  * @date 2018/11/1
  * @Description:
@@ -31,7 +31,7 @@ public class HandlerWithThreadPool extends Handler{
     }
 
     /**
-     * Handler´ÓSocketChannelÖĞ¶Áµ½Êı¾İºó£¬°Ñ¡°Êı¾İµÄ´¦Àí¡±Õâ¸ö¹¤×÷ÈÓµ½Ïß³Ì³ØÀïÃæÖ´ĞĞ
+     * Handlerä»SocketChannelä¸­è¯»åˆ°æ•°æ®åï¼ŒæŠŠâ€œæ•°æ®çš„å¤„ç†â€è¿™ä¸ªå·¥ä½œæ‰”åˆ°çº¿ç¨‹æ± é‡Œé¢æ‰§è¡Œ
      * @throws IOException
      */
     @Override
@@ -39,11 +39,11 @@ public class HandlerWithThreadPool extends Handler{
         int readCount = socketChannel.read(input);
         if(readCount > 0){
             state = PROCESSING;
-            //executeÊÇ·Ç×èÈûµÄ£¬ËùÒÔÒªĞÂÔöÒ»¸östate£¨PROCESSING£©£¬±íÊ¾Êı¾İÔÚ´¦Àíµ±ÖĞ£¬Handler»¹²»ÄÜÖ´ĞĞsend²Ù×÷
+            //executeæ˜¯éé˜»å¡çš„ï¼Œæ‰€ä»¥è¦æ–°å¢ä¸€ä¸ªstateï¼ˆPROCESSINGï¼‰ï¼Œè¡¨ç¤ºæ•°æ®åœ¨å¤„ç†å½“ä¸­ï¼ŒHandlerè¿˜ä¸èƒ½æ‰§è¡Œsendæ“ä½œ
             pool.execute(new Processer(readCount));
         }
-        //ÕâÊ±ºòËäÈ»ÉèÖÃÁËOP_WRITE£¬µ«ÏÂÒ»´Î±¾Handler±»Ñ¡ÖĞÊ±²»»áÖ´ĞĞsend()·½·¨£¬ÒòÎªstate=PROCESSING
-        //»òÕß¿ÉÒÔ°ÑÕâ¸öÉèÖÃ·Åµ½ProcesserÀïÃæ£¬µÈprocessÍê³ÉºóÔÙÉèÎªOP_WRITE
+        //è¿™æ—¶å€™è™½ç„¶è®¾ç½®äº†OP_WRITEï¼Œä½†ä¸‹ä¸€æ¬¡æœ¬Handlerè¢«é€‰ä¸­æ—¶ä¸ä¼šæ‰§è¡Œsend()æ–¹æ³•ï¼Œå› ä¸ºstate=PROCESSING
+        //æˆ–è€…å¯ä»¥æŠŠè¿™ä¸ªè®¾ç½®æ”¾åˆ°Processeré‡Œé¢ï¼Œç­‰processå®Œæˆåå†è®¾ä¸ºOP_WRITE
         selectionKey.interestOps(SelectionKey.OP_WRITE);
     }
 

@@ -25,61 +25,61 @@ public class Client {
     ByteBuffer readBuffer = ByteBuffer.allocate(1024);
 
     public void start() throws IOException {
-        // ´ò¿ªsocketÍ¨µÀ
+        // æ‰“å¼€socketé€šé“
         SocketChannel sc = SocketChannel.open();
-        //ÉèÖÃÎª·Ç×èÈû
+        //è®¾ç½®ä¸ºéé˜»å¡
         sc.configureBlocking(false);
-        //Á¬½Ó·şÎñÆ÷µØÖ·ºÍ¶Ë¿Ú
+        //è¿æ¥æœåŠ¡å™¨åœ°å€å’Œç«¯å£
         sc.connect(new InetSocketAddress("localhost", 9999));
-        //´ò¿ªÑ¡ÔñÆ÷
+        //æ‰“å¼€é€‰æ‹©å™¨
         Selector selector = Selector.open();
-        //×¢²áÁ¬½Ó·şÎñÆ÷socketµÄ¶¯×÷
+        //æ³¨å†Œè¿æ¥æœåŠ¡å™¨socketçš„åŠ¨ä½œ
         sc.register(selector, SelectionKey.OP_CONNECT);
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            //Ñ¡ÔñÒ»×é¼ü£¬ÆäÏàÓ¦µÄÍ¨µÀÒÑÎª I/O ²Ù×÷×¼±¸¾ÍĞ÷¡£
-            //´Ë·½·¨Ö´ĞĞ´¦ÓÚ×èÈûÄ£Ê½µÄÑ¡Ôñ²Ù×÷¡£
+            //é€‰æ‹©ä¸€ç»„é”®ï¼Œå…¶ç›¸åº”çš„é€šé“å·²ä¸º I/O æ“ä½œå‡†å¤‡å°±ç»ªã€‚
+            //æ­¤æ–¹æ³•æ‰§è¡Œå¤„äºé˜»å¡æ¨¡å¼çš„é€‰æ‹©æ“ä½œã€‚
             selector.select();
-            //·µ»Ø´ËÑ¡ÔñÆ÷µÄÒÑÑ¡Ôñ¼ü¼¯¡£
+            //è¿”å›æ­¤é€‰æ‹©å™¨çš„å·²é€‰æ‹©é”®é›†ã€‚
             Set<SelectionKey> keys = selector.selectedKeys();
             LOGGER.info("keys=" + keys.size());
             Iterator<SelectionKey> keyIterator = keys.iterator();
             while (keyIterator.hasNext()) {
                 SelectionKey key = keyIterator.next();
                 keyIterator.remove();
-                // ÅĞ¶Ï´ËÍ¨µÀÉÏÊÇ·ñÕıÔÚ½øĞĞÁ¬½Ó²Ù×÷¡£
+                // åˆ¤æ–­æ­¤é€šé“ä¸Šæ˜¯å¦æ­£åœ¨è¿›è¡Œè¿æ¥æ“ä½œã€‚
                 if (key.isConnectable()) {
                     sc.finishConnect();
                     sc.register(selector, SelectionKey.OP_WRITE);
                     LOGGER.info("server connected...");
                     break;
-                } else if (key.isWritable()) { //Ğ´Êı¾İ
+                } else if (key.isWritable()) { //å†™æ•°æ®
                     LOGGER.info("please input message:");
                     String message = scanner.nextLine();
                     //ByteBuffer writeBuffer = ByteBuffer.wrap(message.getBytes());
                     writeBuffer.clear();
                     writeBuffer.put(message.getBytes());
-                    //½«»º³åÇø¸÷±êÖ¾¸´Î»,ÒòÎªÏòÀïÃæputÁËÊı¾İ±êÖ¾±»¸Ä±äÒªÏë´ÓÖĞ¶ÁÈ¡Êı¾İ·¢Ïò·şÎñÆ÷,¾ÍÒª¸´Î»
+                    //å°†ç¼“å†²åŒºå„æ ‡å¿—å¤ä½,å› ä¸ºå‘é‡Œé¢putäº†æ•°æ®æ ‡å¿—è¢«æ”¹å˜è¦æƒ³ä»ä¸­è¯»å–æ•°æ®å‘å‘æœåŠ¡å™¨,å°±è¦å¤ä½
                     writeBuffer.flip();
                     sc.write(writeBuffer);
 
-                    //×¢²áĞ´²Ù×÷,Ã¿¸öchanelÖ»ÄÜ×¢²áÒ»¸ö²Ù×÷£¬×îºó×¢²áµÄÒ»¸öÉúĞ§
-                    //Èç¹ûÄã¶Ô²»Ö¹Ò»ÖÖÊÂ¼ş¸ĞĞËÈ¤£¬ÄÇÃ´¿ÉÒÔÓÃ¡°Î»»ò¡±²Ù×÷·û½«³£Á¿Á¬½ÓÆğÀ´
+                    //æ³¨å†Œå†™æ“ä½œ,æ¯ä¸ªchanelåªèƒ½æ³¨å†Œä¸€ä¸ªæ“ä½œï¼Œæœ€åæ³¨å†Œçš„ä¸€ä¸ªç”Ÿæ•ˆ
+                    //å¦‚æœä½ å¯¹ä¸æ­¢ä¸€ç§äº‹ä»¶æ„Ÿå…´è¶£ï¼Œé‚£ä¹ˆå¯ä»¥ç”¨â€œä½æˆ–â€æ“ä½œç¬¦å°†å¸¸é‡è¿æ¥èµ·æ¥
                     //int interestSet = SelectionKey.OP_READ | SelectionKey.OP_WRITE;
-                    //Ê¹ÓÃinterest¼¯ºÏ
+                    //ä½¿ç”¨interesté›†åˆ
                     sc.register(selector, SelectionKey.OP_READ);
                     sc.register(selector, SelectionKey.OP_WRITE);
                     sc.register(selector, SelectionKey.OP_READ);
 
-                } else if (key.isReadable()){//¶ÁÈ¡Êı¾İ
+                } else if (key.isReadable()){//è¯»å–æ•°æ®
                     LOGGER.info("receive message:");
                     SocketChannel client = (SocketChannel) key.channel();
-                    //½«»º³åÇøÇå¿ÕÒÔ±¸ÏÂ´Î¶ÁÈ¡
+                    //å°†ç¼“å†²åŒºæ¸…ç©ºä»¥å¤‡ä¸‹æ¬¡è¯»å–
                     readBuffer.clear();
                     int num = client.read(readBuffer);
                     LOGGER.info(new String(readBuffer.array(),0, num));
-                    //×¢²á¶Á²Ù×÷£¬ÏÂÒ»´Î¶ÁÈ¡
+                    //æ³¨å†Œè¯»æ“ä½œï¼Œä¸‹ä¸€æ¬¡è¯»å–
                     sc.register(selector, SelectionKey.OP_WRITE);
                 }
             }
