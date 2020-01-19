@@ -1,5 +1,10 @@
 package com.fly.learn.netty;
 
+import com.fly.learn.netty.encode.PacketDecoder;
+import com.fly.learn.netty.encode.PacketEncoder;
+import com.fly.learn.netty.handler.LoginRequestHandler;
+import com.fly.learn.netty.handler.LoginResponseHandler;
+import com.fly.learn.netty.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -61,7 +66,11 @@ public class NettyServer {
             .childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                    socketChannel.pipeline().addLast(new ServerHandler());
+//                    socketChannel.pipeline().addLast(new ServerHandler());
+                    socketChannel.pipeline().addLast(new PacketDecoder());
+                    socketChannel.pipeline().addLast(new LoginRequestHandler());
+                    socketChannel.pipeline().addLast(new MessageRequestHandler());
+                    socketChannel.pipeline().addLast(new PacketEncoder());
                 }
             });
         bind(serverBootstrap,BEGIN_PORT);

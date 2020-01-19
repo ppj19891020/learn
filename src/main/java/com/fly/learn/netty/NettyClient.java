@@ -1,7 +1,13 @@
 package com.fly.learn.netty;
 
+import com.fly.learn.netty.encode.PacketDecoder;
+import com.fly.learn.netty.encode.PacketEncoder;
+import com.fly.learn.netty.handler.LoginResponseHandler;
+import com.fly.learn.netty.handler.MessageResponstHandler;
 import com.fly.learn.netty.protocol.PacketCodeC;
+import com.fly.learn.netty.protocol.packet.LoginRequestPacket;
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
+import com.fly.learn.netty.protocol.packet.MessageResponsePacket;
 import com.fly.learn.netty.utils.LoginUtils;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -40,6 +46,10 @@ public class NettyClient {
             if(future.isSuccess()){
                 LOGGER.info("连接成功,host:{} port:{}",host,port);
                 Channel channel = ((ChannelFuture)future).channel();
+                LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+                loginRequestPacket.setUserName("ppj");
+                loginRequestPacket.setPassword("123456");
+                channel.writeAndFlush(loginRequestPacket);
                 startConsoleThread(channel);
             }else{
                 if(retry == 0){
@@ -89,7 +99,11 @@ public class NettyClient {
             .handler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
                 protected void initChannel(NioSocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new ClientHandler());
+//                    ch.pipeline().addLast(new ClientHandler());
+                    ch.pipeline().addLast(new PacketDecoder());
+                    ch.pipeline().addLast(new LoginResponseHandler());
+                    ch.pipeline().addLast(new MessageResponstHandler());
+                    ch.pipeline().addLast(new PacketEncoder());
                 }
             });
         //连接server端
