@@ -44,7 +44,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             if(loginRequestPacket.getUserName().equalsIgnoreCase("ppj") &&
                 loginRequestPacket.getPassword().equalsIgnoreCase("123456")){
                 loginResponsePacket.setSuccess(true);
-//                LoginUtils.markAsLogin(ctx.channel(),loginRequestPacket.getUserName());
+                LoginUtils.markAsLogin(ctx.channel(),loginRequestPacket.getUserName());
                 LOGGER.info("客户端登录成功");
             }else{
                 loginResponsePacket.setSuccess(false);
