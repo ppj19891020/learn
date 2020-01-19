@@ -27,7 +27,6 @@ public class NettyServer {
     private final static Logger LOGGER = LoggerFactory.getLogger(NettyServer.class);
 
     private static final int BEGIN_PORT = 8000;
-    private static final AttributeKey<Object> SERVER_NAME_KEY = AttributeKey.newInstance("serverName");
     private static final String SERVER_NAME_VALUE = "nettyServer";
     public static final AttributeKey<Object> CLIENT_KEY = AttributeKey.newInstance("clientKey");
     public static final String CLIENT_VALUE = "clientValue";
@@ -53,7 +52,7 @@ public class NettyServer {
                     LOGGER.info("服务端启动中");
                 }
             })
-            .attr(SERVER_NAME_KEY, SERVER_NAME_VALUE)//给服务端的channel增加额外属性
+            .attr(Constants.SERVER_NAME_KEY, SERVER_NAME_VALUE)//给服务端的channel增加额外属性
             .childAttr(CLIENT_KEY, CLIENT_VALUE)//给每一条连接指定自定义属性
             .option(ChannelOption.SO_BACKLOG,1024)//表示系统用于临时存放已完成三次握手的请求的队列的最大长度，如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数
             .childOption(ChannelOption.SO_KEEPALIVE,true)//ChannelOption.SO_KEEPALIVE表示是否开启TCP底层心跳机制，true为开启
@@ -62,14 +61,7 @@ public class NettyServer {
             .childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                    socketChannel.pipeline().addLast(new StringDecoder());
-                    socketChannel.pipeline().addLast(new SimpleChannelInboundHandler<String>() {
-                        @Override
-                        protected void channelRead0(ChannelHandlerContext ctx, String msg)
-                            throws Exception {
-                            LOGGER.info("msg:{}",msg);
-                        }
-                    });
+                    socketChannel.pipeline().addLast(new ServerHandler());
                 }
             });
         bind(serverBootstrap,BEGIN_PORT);
