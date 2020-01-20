@@ -1,7 +1,7 @@
 package com.fly.learn.netty.utils;
 
 
-import com.fly.learn.netty.Attributes;
+import com.fly.learn.netty.attribute.Attributes;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 

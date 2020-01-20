@@ -1,20 +1,19 @@
-package com.fly.learn.netty;
+package com.fly.learn.netty.server;
 
+import com.fly.learn.netty.Constants;
 import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
-import com.fly.learn.netty.handler.LoginRequestHandler;
-import com.fly.learn.netty.handler.LoginResponseHandler;
-import com.fly.learn.netty.handler.MessageRequestHandler;
+import com.fly.learn.netty.encode.Spliter;
+import com.fly.learn.netty.server.handler.LoginRequestHandler;
+import com.fly.learn.netty.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
@@ -67,6 +66,8 @@ public class NettyServer {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
 //                    socketChannel.pipeline().addLast(new ServerHandler());
+                    //拆包
+                    socketChannel.pipeline().addLast(new Spliter());
                     socketChannel.pipeline().addLast(new PacketDecoder());
                     socketChannel.pipeline().addLast(new LoginRequestHandler());
                     socketChannel.pipeline().addLast(new MessageRequestHandler());

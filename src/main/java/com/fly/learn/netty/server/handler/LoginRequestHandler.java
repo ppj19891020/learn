@@ -1,4 +1,4 @@
-package com.fly.learn.netty.handler;
+package com.fly.learn.netty.server.handler;
 
 import com.fly.learn.netty.protocol.packet.LoginRequestPacket;
 import com.fly.learn.netty.protocol.packet.LoginResponsePacket;

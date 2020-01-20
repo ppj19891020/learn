@@ -15,6 +15,8 @@ import com.fly.learn.netty.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 编解码器
@@ -23,6 +25,7 @@ import java.util.Map;
  * @Description:
  */
 public class PacketCodeC {
+    private final static Logger LOGGER = LoggerFactory.getLogger(PacketCodeC.class);
 
     public static class PacketCodeHold {
         private static final PacketCodeC INSTANCE = new PacketCodeC();
@@ -39,7 +42,7 @@ public class PacketCodeC {
     /**
      * 魔数
      */
-    private static final int MAGIC_NUMBER = 0x12345678;
+    public static final int MAGIC_NUMBER = 0x12345678;
 
     private static final Map<Byte, Class<? extends Packet>> packetTypeMap;
     private static final Map<Byte, Serializer> serializerMap;
@@ -76,6 +79,7 @@ public class PacketCodeC {
         byteBuf.writeByte(packet.getCommand());//命令
         byteBuf.writeInt(bytes.length);//数据包长度
         byteBuf.writeBytes(bytes);//数据包
+        LOGGER.info("编码-长度:{}",bytes.length);
         return byteBuf;
     }
 
@@ -94,6 +98,8 @@ public class PacketCodeC {
         byte serializerAlgorithm = byteBuf.readByte();//序列化方式
         byte command = byteBuf.readByte();//指令
         int length = byteBuf.readInt();//数据包长度
+        LOGGER.info("解码-长度:{}",length);
+        System.out.println("剩余内存:"+Runtime.getRuntime().freeMemory()/1024/1024 + " length:"+length);
         byte[] data = new byte[length];//数据包
         byteBuf.readBytes(data);
 

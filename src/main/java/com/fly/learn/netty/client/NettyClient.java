@@ -1,22 +1,21 @@
-package com.fly.learn.netty;
+package com.fly.learn.netty.client;
 
+import com.fly.learn.netty.Constants;
+import com.fly.learn.netty.client.handler.LoginResponseHandler;
+import com.fly.learn.netty.client.handler.MessageResponstHandler;
 import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
-import com.fly.learn.netty.handler.LoginResponseHandler;
-import com.fly.learn.netty.handler.MessageResponstHandler;
-import com.fly.learn.netty.protocol.PacketCodeC;
-import com.fly.learn.netty.protocol.packet.LoginRequestPacket;
+import com.fly.learn.netty.encode.Spliter;
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
-import com.fly.learn.netty.protocol.packet.MessageResponsePacket;
 import com.fly.learn.netty.utils.LoginUtils;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
@@ -46,10 +45,6 @@ public class NettyClient {
             if(future.isSuccess()){
                 LOGGER.info("连接成功,host:{} port:{}",host,port);
                 Channel channel = ((ChannelFuture)future).channel();
-                LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-                loginRequestPacket.setUserName("ppj");
-                loginRequestPacket.setPassword("123456");
-                channel.writeAndFlush(loginRequestPacket);
                 startConsoleThread(channel);
             }else{
                 if(retry == 0){
@@ -77,11 +72,11 @@ public class NettyClient {
                     System.out.println("输入消息发送至服务端：");
                     Scanner sc = new Scanner(System.in);
                     String line = sc.nextLine();
-
-                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                    messageRequestPacket.setMessage(line);
-                    ByteBuf byteBuf = PacketCodeC.getInstance().encode(channel.alloc().buffer(), messageRequestPacket);
-                    channel.writeAndFlush(byteBuf);
+                    for(int i=0;i<1000;i++){
+                        MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
+                        messageRequestPacket.setMessage(line);
+                        channel.writeAndFlush(messageRequestPacket);
+                    }
                 }
             }
         }).start();
@@ -100,6 +95,8 @@ public class NettyClient {
                 @Override
                 protected void initChannel(NioSocketChannel ch) throws Exception {
 //                    ch.pipeline().addLast(new ClientHandler());
+                    //拆包
+                    ch.pipeline().addLast(new Spliter());
                     ch.pipeline().addLast(new PacketDecoder());
                     ch.pipeline().addLast(new LoginResponseHandler());
                     ch.pipeline().addLast(new MessageResponstHandler());

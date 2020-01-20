@@ -1,4 +1,4 @@
-package com.fly.learn.netty;
+package com.fly.learn.netty.attribute;
 
 import io.netty.util.AttributeKey;
 

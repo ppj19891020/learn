@@ -1,4 +1,4 @@
-package com.fly.learn.netty.handler;
+package com.fly.learn.netty.server.handler;
 
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
 import com.fly.learn.netty.protocol.packet.MessageResponsePacket;
