@@ -4,6 +4,7 @@ import com.fly.learn.netty.Constants;
 import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
 import com.fly.learn.netty.encode.Spliter;
+import com.fly.learn.netty.handler.LifeCyCleTestHandler;
 import com.fly.learn.netty.server.handler.LoginRequestHandler;
 import com.fly.learn.netty.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -68,6 +69,7 @@ public class NettyServer {
 //                    socketChannel.pipeline().addLast(new ServerHandler());
                     //拆包
                     socketChannel.pipeline().addLast(new Spliter());
+                    socketChannel.pipeline().addLast(new LifeCyCleTestHandler());
                     socketChannel.pipeline().addLast(new PacketDecoder());
                     socketChannel.pipeline().addLast(new LoginRequestHandler());
                     socketChannel.pipeline().addLast(new MessageRequestHandler());

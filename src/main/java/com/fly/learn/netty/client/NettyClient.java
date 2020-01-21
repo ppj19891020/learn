@@ -6,6 +6,7 @@ import com.fly.learn.netty.client.handler.MessageResponstHandler;
 import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
 import com.fly.learn.netty.encode.Spliter;
+import com.fly.learn.netty.handler.LifeCyCleTestHandler;
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
 import com.fly.learn.netty.utils.LoginUtils;
 import io.netty.bootstrap.Bootstrap;
@@ -15,7 +16,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
@@ -97,6 +97,7 @@ public class NettyClient {
 //                    ch.pipeline().addLast(new ClientHandler());
                     //拆包
                     ch.pipeline().addLast(new Spliter());
+                    ch.pipeline().addLast(new LifeCyCleTestHandler());
                     ch.pipeline().addLast(new PacketDecoder());
                     ch.pipeline().addLast(new LoginResponseHandler());
                     ch.pipeline().addLast(new MessageResponstHandler());
