@@ -1,10 +1,14 @@
 package com.fly.learn.netty.protocol;
 
+import static com.fly.learn.netty.protocol.Command.HEART_BEAT_REQUEST_PACKET;
+import static com.fly.learn.netty.protocol.Command.HEART_BEAT_RESPONSE_PACKET;
 import static com.fly.learn.netty.protocol.Command.LOGIN_REPONST_COMMAND;
 import static com.fly.learn.netty.protocol.Command.LOGIN_REQUEST_COMMAND;
 import static com.fly.learn.netty.protocol.Command.MESSAGE_REQUEST_COMMAND;
 import static com.fly.learn.netty.protocol.Command.MESSAGE_RESPONST_COMMAND;
 
+import com.fly.learn.netty.protocol.packet.HeartBeatRequestPacket;
+import com.fly.learn.netty.protocol.packet.HeartBeatResponsePacket;
 import com.fly.learn.netty.protocol.packet.LoginRequestPacket;
 import com.fly.learn.netty.protocol.packet.LoginResponsePacket;
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
@@ -53,6 +57,8 @@ public class PacketCodeC {
         packetTypeMap.put(LOGIN_REPONST_COMMAND, LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST_COMMAND, MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONST_COMMAND, MessageResponsePacket.class);
+        packetTypeMap.put(HEART_BEAT_REQUEST_PACKET, HeartBeatRequestPacket.class);
+        packetTypeMap.put(HEART_BEAT_RESPONSE_PACKET, HeartBeatResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

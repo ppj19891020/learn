@@ -4,10 +4,11 @@ import com.fly.learn.netty.Constants;
 import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
 import com.fly.learn.netty.encode.Spliter;
-import com.fly.learn.netty.handler.LifeCyCleTestHandler;
 import com.fly.learn.netty.server.handler.AuthHandler;
+import com.fly.learn.netty.handler.IMIdleStateHandler;
 import com.fly.learn.netty.server.handler.LoginRequestHandler;
 import com.fly.learn.netty.server.handler.MessageRequestHandler;
+import com.fly.learn.netty.server.handler.ServerHeartBeatHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -67,10 +68,12 @@ public class NettyServer {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
 //                    socketChannel.pipeline().addLast(new ServerHandler());
+                    socketChannel.pipeline().addLast(new IMIdleStateHandler());
                     //拆包
                     socketChannel.pipeline().addLast(new Spliter());
 //                    socketChannel.pipeline().addLast(new LifeCyCleTestHandler());
                     socketChannel.pipeline().addLast(new PacketDecoder());
+                    socketChannel.pipeline().addLast(new ServerHeartBeatHandler());
                     socketChannel.pipeline().addLast(new LoginRequestHandler());
                     socketChannel.pipeline().addLast(new AuthHandler());
                     socketChannel.pipeline().addLast(new MessageRequestHandler());

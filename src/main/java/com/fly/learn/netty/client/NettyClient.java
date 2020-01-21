@@ -1,12 +1,14 @@
 package com.fly.learn.netty.client;
 
 import com.fly.learn.netty.Constants;
+import com.fly.learn.netty.client.handler.ClientHeartBeatResponseHandler;
+import com.fly.learn.netty.client.handler.HeartBeatTimeHandler;
 import com.fly.learn.netty.client.handler.LoginResponseHandler;
 import com.fly.learn.netty.client.handler.MessageResponstHandler;
 import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
 import com.fly.learn.netty.encode.Spliter;
-import com.fly.learn.netty.handler.LifeCyCleTestHandler;
+import com.fly.learn.netty.handler.IMIdleStateHandler;
 import com.fly.learn.netty.protocol.packet.LoginRequestPacket;
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
 import com.fly.learn.netty.utils.LoginUtils;
@@ -32,7 +34,7 @@ public class NettyClient {
     private final static Logger LOGGER = LoggerFactory.getLogger(NettyClient.class);
     private final static int MAX_RETRY = 10;
     private static final String CLIENT_NAME_VALUE = "nettyClient-1";
-
+    public static Bootstrap bootstrap = new Bootstrap();
 
     /**
      * 自动重连机制
@@ -102,7 +104,6 @@ public class NettyClient {
     }
 
     public static void main(String[] args){
-        Bootstrap bootstrap = new Bootstrap();
         NioEventLoopGroup group = new NioEventLoopGroup();
         bootstrap.group(group)
             .channel(NioSocketChannel.class)
@@ -114,6 +115,7 @@ public class NettyClient {
                 @Override
                 protected void initChannel(NioSocketChannel ch) throws Exception {
 //                    ch.pipeline().addLast(new ClientHandler());
+//                    ch.pipeline().addLast(new IMIdleStateHandler());
                     //拆包
                     ch.pipeline().addLast(new Spliter());
 //                    ch.pipeline().addLast(new LifeCyCleTestHandler());
@@ -121,6 +123,7 @@ public class NettyClient {
                     ch.pipeline().addLast(new LoginResponseHandler());
                     ch.pipeline().addLast(new MessageResponstHandler());
                     ch.pipeline().addLast(new PacketEncoder());
+                    ch.pipeline().addLast(new HeartBeatTimeHandler());
                 }
             });
         //连接server端

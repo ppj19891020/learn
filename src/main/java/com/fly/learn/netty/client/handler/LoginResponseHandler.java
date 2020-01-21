@@ -5,7 +5,6 @@ import com.fly.learn.netty.protocol.packet.LoginResponsePacket;
 import com.fly.learn.netty.utils.LoginUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +25,7 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
         loginRequestPacket.setPassword("123456");
         // 写数据
 //        ctx.channel().writeAndFlush(loginRequestPacket);
+        super.channelActive(ctx);
     }
 
     @Override

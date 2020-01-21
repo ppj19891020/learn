@@ -28,4 +28,13 @@ public interface Command {
      */
     Byte MESSAGE_RESPONST_COMMAND = 4;
 
+    /**
+     * 心跳监测
+     */
+    Byte HEART_BEAT_REQUEST_PACKET = 5;
+
+    /**
+     * 心跳监测
+     */
+    Byte HEART_BEAT_RESPONSE_PACKET = 6;
 }
