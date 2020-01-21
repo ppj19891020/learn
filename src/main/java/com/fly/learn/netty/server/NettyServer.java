@@ -15,7 +15,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
@@ -70,7 +69,7 @@ public class NettyServer {
 //                    socketChannel.pipeline().addLast(new ServerHandler());
                     //拆包
                     socketChannel.pipeline().addLast(new Spliter());
-                    socketChannel.pipeline().addLast(new LifeCyCleTestHandler());
+//                    socketChannel.pipeline().addLast(new LifeCyCleTestHandler());
                     socketChannel.pipeline().addLast(new PacketDecoder());
                     socketChannel.pipeline().addLast(new LoginRequestHandler());
                     socketChannel.pipeline().addLast(new AuthHandler());

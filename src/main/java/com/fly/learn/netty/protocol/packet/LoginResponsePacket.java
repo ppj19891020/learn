@@ -12,6 +12,16 @@ public class LoginResponsePacket extends Packet {
     private boolean success;
 
     /**
+     * 用户id
+     */
+    private String userId;
+
+    /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
      * 请求失败原因
      */
     private String reason;
@@ -19,6 +29,22 @@ public class LoginResponsePacket extends Packet {
     @Override
     public Byte getCommand() {
         return Command.LOGIN_REPONST_COMMAND;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public boolean isSuccess() {

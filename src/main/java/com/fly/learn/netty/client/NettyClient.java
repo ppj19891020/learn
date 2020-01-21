@@ -7,6 +7,7 @@ import com.fly.learn.netty.encode.PacketDecoder;
 import com.fly.learn.netty.encode.PacketEncoder;
 import com.fly.learn.netty.encode.Spliter;
 import com.fly.learn.netty.handler.LifeCyCleTestHandler;
+import com.fly.learn.netty.protocol.packet.LoginRequestPacket;
 import com.fly.learn.netty.protocol.packet.MessageRequestPacket;
 import com.fly.learn.netty.utils.LoginUtils;
 import io.netty.bootstrap.Bootstrap;
@@ -68,13 +69,31 @@ public class NettyClient {
     private static void startConsoleThread(Channel channel){
         new Thread(()->{
             while (!Thread.interrupted()){
-                if(LoginUtils.hasLogin(channel)){
+                if(!LoginUtils.hasLogin(channel)){
+                    System.out.println("请输入用户名：");
+                    Scanner sc = new Scanner(System.in);
+                    String userName = sc.nextLine();
+                    LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+                    loginRequestPacket.setUserName(userName);
+                    loginRequestPacket.setPassword("123456");
+                    channel.writeAndFlush(loginRequestPacket);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else {
                     System.out.println("输入消息发送至服务端：");
                     Scanner sc = new Scanner(System.in);
                     String line = sc.nextLine();
-                    for(int i=0;i<1000;i++){
+                    if(line.split(" ").length != 2){
+                        System.out.println("请用空格分隔消息，比如'用户id 发送消息内容'");
+                    }else{
+                        String userId = line.split(" ")[0];
+                        String message = line.split(" ")[1];
                         MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                        messageRequestPacket.setMessage(line);
+                        messageRequestPacket.setUserId(userId);
+                        messageRequestPacket.setMessage(message);
                         channel.writeAndFlush(messageRequestPacket);
                     }
                 }
@@ -97,7 +116,7 @@ public class NettyClient {
 //                    ch.pipeline().addLast(new ClientHandler());
                     //拆包
                     ch.pipeline().addLast(new Spliter());
-                    ch.pipeline().addLast(new LifeCyCleTestHandler());
+//                    ch.pipeline().addLast(new LifeCyCleTestHandler());
                     ch.pipeline().addLast(new PacketDecoder());
                     ch.pipeline().addLast(new LoginResponseHandler());
                     ch.pipeline().addLast(new MessageResponstHandler());

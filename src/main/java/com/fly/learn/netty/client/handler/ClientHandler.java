@@ -37,13 +37,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 //        byteBuf.writeBytes(bytes);
 
         //构建登陆信息
-        LOGGER.info("客户端开始登陆");
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-        loginRequestPacket.setUserName("ppj");
-        loginRequestPacket.setPassword("123456");
-        //编码
-        ByteBuf byteBuf = PacketCodeC.getInstance().encode(ctx.alloc().buffer(),loginRequestPacket);
-        ctx.channel().writeAndFlush(byteBuf);
+//        LOGGER.info("客户端开始登陆");
+//        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+//        loginRequestPacket.setUserName("ppj");
+//        loginRequestPacket.setPassword("123456");
+//        //编码
+//        ByteBuf byteBuf = PacketCodeC.getInstance().encode(ctx.alloc().buffer(),loginRequestPacket);
+//        ctx.channel().writeAndFlush(byteBuf);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         if(packet instanceof LoginResponsePacket){
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket)packet;
             if(loginResponsePacket.isSuccess()){
-                LoginUtils.markAsLogin(ctx.channel(),"ppj");
+                LoginUtils.markAsLogin(ctx.channel(),"ppj","");
             }
         }else if(packet instanceof MessageResponsePacket){
             MessageResponsePacket messageResponsePacket = (MessageResponsePacket)packet;

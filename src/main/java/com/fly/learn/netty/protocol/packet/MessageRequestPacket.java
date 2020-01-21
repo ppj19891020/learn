@@ -11,6 +11,11 @@ import com.fly.learn.netty.protocol.Command;
 public class MessageRequestPacket extends Packet{
 
     /**
+     * 用户id
+     */
+    private String userId;
+
+    /**
      * 消息
      */
     private String message;
@@ -18,6 +23,14 @@ public class MessageRequestPacket extends Packet{
     @Override
     public Byte getCommand() {
         return Command.MESSAGE_REQUEST_COMMAND;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getMessage() {

@@ -25,15 +25,15 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
         loginRequestPacket.setUserName("ppj");
         loginRequestPacket.setPassword("123456");
         // 写数据
-        ctx.channel().writeAndFlush(loginRequestPacket);
+//        ctx.channel().writeAndFlush(loginRequestPacket);
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket msg)
         throws Exception {
         if(msg.isSuccess()){
-            LoginUtils.markAsLogin(ctx.channel(),"ppj");
-            LOGGER.info("客户端登录成功");
+            LoginUtils.markAsLogin(ctx.channel(),msg.getUserId(),"sss");
+            LOGGER.info("用户名:{}登录成功,服务端分配用户id:{}",msg.getUserName(),msg.getUserId());
         }else{
             LOGGER.info("客户端登录失败，原因:"+msg.getReason());
         }

@@ -1,5 +1,6 @@
 package com.fly.learn.netty.attribute;
 
+import com.fly.learn.netty.session.Session;
 import io.netty.util.AttributeKey;
 
 /**
@@ -20,4 +21,8 @@ public interface Attributes {
      */
     AttributeKey<String> USER_NAME = AttributeKey.newInstance("userName");
 
+    /**
+     * session信息
+     */
+    AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
 }
