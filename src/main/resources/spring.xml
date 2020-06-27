@@ -19,4 +19,6 @@
   <bean class="com.fly.learn.spring.postprocess.CustomBeanDefinitionRegistry"/>
 
   <bean class="com.fly.learn.spring.bean.TestImport"/>
+
+  <bean class="com.fly.learn.spring.bean.TestApplicationContextInitializer"/>
 </beans>
