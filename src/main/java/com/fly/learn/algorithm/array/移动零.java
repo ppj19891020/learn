@@ -28,7 +28,7 @@ public class 移动零 {
      * @param nums
      */
     public static void moveZeroes1(int[] nums) {
-        System.out.println("输入："+print(nums));
+        System.out.println("输入："+ArrayUtil.print(nums));
         int j = 0 ;
         for(int i=0;i<nums.length;i++){
             if(nums[i] != 0){
@@ -38,7 +38,7 @@ public class 移动零 {
         for(int i=j;i<nums.length;i++){
             nums[i] = 0;
         }
-        System.out.println("输出："+print(nums));
+        System.out.println("输出："+ArrayUtil.print(nums));
     }
 
     /**
@@ -47,7 +47,7 @@ public class 移动零 {
      * @param nums
      */
     public static void moveZeroes2(int[] nums) {
-        System.out.println("输入："+print(nums));
+        System.out.println("输入："+ArrayUtil.print(nums));
         int j = 0 ;
         for(int i=0;i<nums.length;i++){
             if(nums[i] != 0){
@@ -56,16 +56,10 @@ public class 移动零 {
                 nums[j++] = temp;
             }
         }
-        System.out.println("输出："+print(nums));
+        System.out.println("输出："+ArrayUtil.print(nums));
     }
 
-    public static String print(int[] nums){
-        StringBuilder result = new StringBuilder();
-        for(int i=0;i<nums.length;i++){
-            result.append(nums[i]);
-        }
-        return result.toString();
-    }
+
 
     public static void main(String[] args) {
         int[] test = new int[]{0,1,0,3,12};
