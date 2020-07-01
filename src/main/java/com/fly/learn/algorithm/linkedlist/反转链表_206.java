@@ -1,7 +1,17 @@
 package com.fly.learn.algorithm.linkedlist;
 
 /**
- * leetcode题目：https://leetcode-cn.com/problems/reverse-linked-list/
+ //给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+ //
+ // 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+ //
+ //
+ //
+ // 示例:
+ //
+ // 给定 1->2->3->4, 你应该返回 2->1->4->3.
+ //
+ // Related Topics 链表 * leetcode题目：https://leetcode-cn.com/problems/reverse-linked-list/
  * 反转一个单链表。
  * 示例:
  *  输入: 1->2->3->4->5->NULL
@@ -10,39 +20,30 @@ package com.fly.learn.algorithm.linkedlist;
  * @date 2020-01-03
  * @Description:
  */
-public class ReverseLinkList_206 {
-
-    /**
-     * 输出linklist
-     */
-    public static void outputLinkList(ListNode head){
-        ListNode temp = head;
-        while (null != temp){
-            System.out.print(temp.val+">");
-            temp = temp.next;
-        }
-        System.out.println();
-    }
+public class 反转链表_206 {
 
     /***
-     * 反转链表--头部插入(next 指针反转)
+     * 双指针法，pre和cur指针，每次遍历cur指针，然后将pre.next = cur,遇到null值则完成
      * @param head
      * @return
      */
     public static ListNode reverseList(ListNode head) {
-        if(null == head || head.next == null){
-            return head;
+        ListNode pre = null;
+        ListNode cur = head;
+        while (null != cur){
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
         }
-        ListNode newHead = null;
-        while (null != head){
-            ListNode temp = head.next;//下一个节点
-            head.next = newHead;
-            newHead = head;
-            head = temp;
-        }
-        return newHead;
+        return null;
     }
 
+    /**
+     * 递归法
+     * @param head
+     * @return
+     */
     public static ListNode reverseList2(ListNode head){
         if (head == null || head.next == null) {
             return head;
@@ -92,12 +93,7 @@ public class ReverseLinkList_206 {
             temp = head;
             head = head.next;
         }
-//
-//        ListNode temp = head.next;//下一个节点
-//        head.next = newHead;
-//        newHead = head;
-//        head = temp;
-//
+
         //部分链表反转
         ListNode newHead = null;
         while (headNode != null && headNode.next != tailNode){
@@ -124,9 +120,9 @@ public class ReverseLinkList_206 {
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
         head.next.next.next.next.next = null;
-        outputLinkList(head);
-//        outputLinkList(reverseList(head));
-//        outputLinkList(reverseList2(head));
+        LinkListUtils.outputLinkList(head);
+//        LinkListUtils.outputLinkList(reverseList(head));
+//        LinkListUtils.outputLinkList(reverseList2(head));
         partReverseList(head,2,4);
     }
 
