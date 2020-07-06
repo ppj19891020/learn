@@ -28,52 +28,30 @@ public class AddTwoNumber {
      * @return
      */
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        if(null == l1){
-            return l2;
+        ListNode pre = new ListNode(0);
+        ListNode cur = pre;
+        // 进位
+        int carry = 0;
+        while (null != l1 || null != l2){
+            int x = l1 == null?0:l1.val;
+            int y = l2 == null?0:l2.val;
+            int sum = x + y + carry;
+            carry = sum / 10;
+            cur.next = new ListNode(sum % 10);
+            cur = cur.next;
+            if(null != l1){
+                l1 = l1.next;
+            }
+            if(null != l2){
+                l2 = l2.next;
+            }
         }
-        if(null == l2){
-            return l1;
-        }
-        //表示进位
-        int jinwei = 0;
-        ListNode result =  new ListNode(-1);
-        ListNode tmp = result;
-        while (null != l1 && null != l2){
-            int sum = l1.val + l2.val + jinwei;
-            int value = sum % 10;
-            result.next = new ListNode(value);
-            result = result.next;
-            jinwei = sum / 10;
-            l1 = l1.next;
-            l2 = l2.next;
-        }
-
-        //l2不为null l1位null
-        while (null != l1){
-            int sum = l1.val + jinwei;
-            int value = sum % 10 + jinwei;
-            result.next = new ListNode(value);
-            result = result.next;
-            jinwei = sum / 10;
-            l1 = l1.next;
+        // 最后一个节点判断是否有进位，如果有进位则需要追加一个节点
+        if(1 == carry){
+            cur.next = new ListNode(1);
         }
 
-        //l2不为null l1位null
-        while (null != l2){
-            int sum = l2.val + jinwei;
-            int value = sum % 10 + jinwei;
-            result.next = new ListNode(value);
-            result = result.next;
-            jinwei = sum / 10;
-            l2 = l2.next;
-        }
-
-        //最后一个节点主要看是否有没有进位
-        if (jinwei == 1) {
-            result.next = new ListNode(1);
-        }
-
-        return tmp.next;
+        return pre.next;
     }
 
     public static void main(String[] args) {
@@ -83,7 +61,7 @@ public class AddTwoNumber {
         ListNode l2 = new ListNode(5);
         l2.next = new ListNode(6);
         l2.next.next = new ListNode(4);
-        addTwoNumbers(l1,l2);
+        LinkListUtils.outputLinkList(addTwoNumbers(l1,l2));
     }
 
 }
