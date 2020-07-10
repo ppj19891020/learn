@@ -1,9 +1,6 @@
 package com.fly.learn.algorithm.stack;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.ListDV;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.Stack;
 
 /**
