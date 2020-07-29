@@ -33,9 +33,56 @@ public class 最小覆盖子串 {
      * @param t
      * @return
      */
-    public String minWindow(String s, String t) {
+    public static String minWindow(String s, String t) {
+        if(s == null || s == "" || t == null || t == "" || s.length() < t.length()){
+            return "";
+        }
+        // 用来统计t中每个字符的个数
+        int[] needs = new int[128];
+        // 用来统计滑动窗口中每个字符出现的次数
+        int[] window = new int[128];
+        for(int i=0;i<t.length();i++){
+            needs[t.charAt(i)]++;
+        }
 
-        return null;
+        // 结果值
+        String res = "";
+        // 左指针、右指针
+        int left = 0 ;
+        int right = 0;
+
+        // 目前多少个字符
+        int count = 0;
+        // 用来记录最短需要多个个字符
+        int minLength = s.length() + 1;
+        while (right < s.length()){
+            char ch = s.charAt(right);
+            window[ch]++;
+            if(needs[ch] > 0 && needs[ch] >= window[ch]){
+                count++;
+            }
+            // 移动到不满足条件为止
+            while(count == t.length()){
+                ch = s.charAt(left);
+                if(needs[ch] > 0 && needs[ch] >= window[ch]){
+                    count--;
+                }
+                if(right - left + 1 < minLength){
+                    minLength = right - left + 1;
+                    res = s.substring(left,right+1);
+                }
+                window[ch]--;
+                left++;
+            }
+            right++;
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        String s = "ADOBECODEBANC";
+        String t = "ABC";
+        minWindow(s,t);
     }
 
 }
