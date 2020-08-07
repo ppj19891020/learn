@@ -20,13 +20,13 @@ public class 反转链表_206 {
     public static ListNode reverseList(ListNode head) {
         ListNode pre = null;
         ListNode cur = head;
-        while (null != cur){
+        while(null != cur){
             ListNode temp = cur.next;
             cur.next = pre;
             pre = cur;
             cur = temp;
         }
-        return null;
+        return pre;
     }
 
     /**
@@ -111,9 +111,9 @@ public class 反转链表_206 {
         head.next.next.next.next = new ListNode(5);
         head.next.next.next.next.next = null;
         LinkListUtils.outputLinkList(head);
-//        LinkListUtils.outputLinkList(reverseList(head));
+        LinkListUtils.outputLinkList(reverseList(head));
 //        LinkListUtils.outputLinkList(reverseList2(head));
-        partReverseList(head,2,4);
+//        partReverseList(head,2,4);
     }
 
 }

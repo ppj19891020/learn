@@ -72,16 +72,19 @@ public class 环形链表 {
      * @return
      */
     public static boolean hasCycle2(ListNode head) {
-        ListNode first = head;
-        ListNode second = head.next.next;
-        while ( null != first && null != second){
-            if(first == second){
-                return true;
-            }
-            first = first.next;
-            second = second.next.next;
+        if (head == null || head.next == null) {
+            return false;
         }
-        return false;
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -92,7 +95,7 @@ public class 环形链表 {
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
-        node4.next = node2;
+//        node4.next = node2;
 
 //        hasCycle1(node1);
         hasCycle2(node1);
