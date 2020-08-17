@@ -89,6 +89,34 @@
             <version>29.0-jre</version>
         </dependency>
 
+        <!--云端 sdk-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-iot</artifactId>
+            <version>7.10.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.5.6</version>
+        </dependency>
+
+
+        <!--iott-->
+        <!-- amqp 1.0 qpid client -->
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-jms-client</artifactId>
+            <version>0.47.0</version>
+        </dependency>
+        <!-- util for base64-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+
     </dependencies>
 
     <build>
