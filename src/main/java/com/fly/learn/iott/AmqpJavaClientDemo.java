@@ -41,9 +41,9 @@ public class AmqpJavaClientDemo {
 
     public static void main(String[] args) throws Exception {
         //参数说明，请参见AMQP客户端接入说明文档。
-        String accessKey = "LTAI4G2QBpZ3szaeeXPsDCTL";
-        String accessSecret = "lcCTa8hXNt83fwRf00u0oHDFyN1Euu";
-        String consumerGroupId = "DEFAULT_GROUP";
+        String accessKey = "";
+        String accessSecret = "";
+        String consumerGroupId = "";
         //iotInstanceId：购买的实例请填写实例ID，公共实例请填空字符串""。
         String iotInstanceId = "";
         long timeStamp = System.currentTimeMillis();
