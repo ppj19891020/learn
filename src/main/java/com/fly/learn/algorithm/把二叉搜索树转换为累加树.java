@@ -28,6 +28,8 @@ package com.fly.learn.algorithm;
  */
 public class 把二叉搜索树转换为累加树 {
 
+    private int sum = 0;
+
     /**
      * 反中序遍历
      * 二叉搜索树：按照中序遍历即可得出从小到大排序
@@ -37,7 +39,6 @@ public class 把二叉搜索树转换为累加树 {
      * @return
      */
     public TreeNode convertBST(TreeNode root) {
-        int sum = 0;
         if (root != null) {
             convertBST(root.right);
             sum += root.val;
