@@ -13,11 +13,11 @@ public abstract class CommonTemplate {
     private final static Logger LOGGER = LoggerFactory.getLogger(CommonTemplate.class);
 
     public void create(){
-        LOGGER.info("刚开始执行1");
+        LOGGER.info("1");
         this.test1();
-        LOGGER.info("刚开始执行2");
+        LOGGER.info("2");
         this.test2();
-        LOGGER.info("执行完成");
+        LOGGER.info("执3");
     }
 
     abstract void test1();

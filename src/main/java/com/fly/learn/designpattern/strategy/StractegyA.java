@@ -14,6 +14,5 @@ public class StractegyA extends Stractegy{
 
     @Override
     void algorithmInterface() {
-        LOGGER.info("²ßÂÔA");
     }
 }

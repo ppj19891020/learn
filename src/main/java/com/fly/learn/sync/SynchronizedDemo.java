@@ -14,17 +14,17 @@ public class SynchronizedDemo {
 
     public void test1(){
         synchronized (this){
-            LOGGER.info("synchronized this ´úÂë¿é");
+            LOGGER.info("synchronized this1");
         }
     }
 
     public synchronized void test2(){
-        LOGGER.info("synchronized this ´úÂë¿é2");
+        LOGGER.info("synchronized this2");
     }
 
     public void test3(){
         synchronized (SynchronizedDemo.class){
-            LOGGER.info("synchronized this ´úÂë¿é2");
+            LOGGER.info("synchronized this2");
         }
     }
 

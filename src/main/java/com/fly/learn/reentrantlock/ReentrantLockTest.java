@@ -7,7 +7,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * reentrantloct 测试
  * @author: peijiepang
  * @date 2018/11/7
  * @Description:
@@ -30,13 +29,10 @@ public class ReentrantLockTest extends Thread{
     @Override
     public void run() {
         for(int i=0;i<1000;i++){
-            //可限时加锁
             //reentrantLock.tryLock(1000,TimeUnit.MILLISECONDS);
 
-            //可响应线程中断请求
             //reentrantLock.lockInterruptibly();
 
-            //可指定公平锁
             //ReentrantLock fairLock = new ReentrantLock(true);
 
             reentrantLock.lock();

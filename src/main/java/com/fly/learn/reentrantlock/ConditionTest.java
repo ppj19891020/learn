@@ -30,11 +30,11 @@ public class ConditionTest extends Thread{
         try{
             LOGGER.info("thread name:{} lock success.",Thread.currentThread().getName());
             if(Thread.currentThread().getName().equals("test1")){
-                condition.await();//释放锁，然后等待唤醒
-                LOGGER.info("thread name:{} 被唤醒,即将unlock.",Thread.currentThread().getName());
+                condition.await();
+                LOGGER.info("thread name:{} unlock.",Thread.currentThread().getName());
             }else if(Thread.currentThread().getName().equals("test2")) {
-                condition.signal();//唤醒等待线程
-                LOGGER.info("thread name:{} 唤醒队列中的线程,即将unlock.",Thread.currentThread().getName());
+                condition.signal();
+                LOGGER.info("thread name:{} unlock.",Thread.currentThread().getName());
             }
         }catch (InterruptedException ex){
             ex.printStackTrace();
