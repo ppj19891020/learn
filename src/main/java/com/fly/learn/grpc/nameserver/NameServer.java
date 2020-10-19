@@ -1,4 +1,4 @@
-package com.fly.learn.grpc;
+package com.fly.learn.grpc.nameserver;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

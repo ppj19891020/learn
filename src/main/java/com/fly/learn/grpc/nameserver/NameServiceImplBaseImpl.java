@@ -1,4 +1,4 @@
-package com.fly.learn.grpc;
+package com.fly.learn.grpc.nameserver;
 
 import io.grpc.examples.nameserver.Ip;
 import io.grpc.examples.nameserver.Name;

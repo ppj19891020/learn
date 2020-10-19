@@ -1,0 +1,20 @@
+syntax = "proto3";
+package file;
+option java_multiple_files = true;
+option java_package = "com.demo.grpc.file";
+option java_outer_classname = "File";
+
+service FileService {
+    rpc Upload (Request) returns (Response) {}
+}
+
+message Request{
+    // 定义文件为字节类型
+    bytes file = 1;
+    string name = 2;
+}
+
+message Response{
+    int32 code = 1;
+    string msg = 2;
+}

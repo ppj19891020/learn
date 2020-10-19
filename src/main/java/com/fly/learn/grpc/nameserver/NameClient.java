@@ -1,4 +1,4 @@
-package com.fly.learn.grpc;
+package com.fly.learn.grpc.nameserver;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
