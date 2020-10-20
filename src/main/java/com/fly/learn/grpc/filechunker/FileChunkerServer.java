@@ -1,6 +1,5 @@
-package com.fly.learn.grpc.fileChunker;
+package com.fly.learn.grpc.filechunker;
 
-import com.fly.learn.grpc.file.FileServiceImplBaseImpl;
 import io.grpc.ServerBuilder;
 import java.io.IOException;
 

@@ -13,4 +13,5 @@ message ChunkRequest{
 
 message ChunkResponse {
   bytes chunk = 1;
+  int32 batchid = 2;
 }
