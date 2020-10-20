@@ -1,5 +1,7 @@
 package com.fly.learn.grpc.file;
 
+import com.demo.grpc.file.DownloadRequest;
+import com.demo.grpc.file.DownloadResponse;
 import com.demo.grpc.file.FileServiceGrpc;
 import com.demo.grpc.file.Request;
 import com.demo.grpc.file.Response;
@@ -23,8 +25,8 @@ public class FileClient {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         FileClient client = new FileClient(HOST, PORT);
-//        client.upload("b.log", "/Users/peijiepang/Downloads/Motrix-1.4.1 for Mac.dmg");
         client.upload("Sentinel浅析(final2).pptx", "/Users/peijiepang/Downloads/Sentinel浅析(final2).pptx");
+        client.download("Sentinel浅析(final2).pptx");
         client.shutdown();
     }
 
@@ -52,8 +54,18 @@ public class FileClient {
         try {
             response = blockingStub.upload(request);
             System.out.println(response.getMsg());
-        } catch (StatusRuntimeException ex) {
-        }
+        } catch (StatusRuntimeException ex) { }
+    }
+
+    /**
+     * 客户端下载
+     * @param name
+     * @throws IOException
+     */
+    public void download(String name) throws IOException{
+        DownloadRequest request = DownloadRequest.newBuilder().setName(name).build();
+        DownloadResponse response = blockingStub.download(request);
+        System.out.println(response);
     }
 
     /**

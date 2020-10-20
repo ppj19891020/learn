@@ -5,7 +5,8 @@ option java_package = "com.demo.grpc.file";
 option java_outer_classname = "File";
 
 service FileService {
-    rpc Upload (Request) returns (Response) {}
+    rpc Upload (Request) returns (Response) {};
+    rpc Download (DownloadRequest) returns (DownloadResponse){};
 }
 
 message Request{
@@ -17,4 +18,15 @@ message Request{
 message Response{
     int32 code = 1;
     string msg = 2;
+}
+
+// 文件下载请求体
+message DownloadRequest{
+    string name = 1;
+}
+
+// 文件下载byte数组
+message DownloadResponse{
+    int32 code = 1; // 返回状态码
+    bytes file = 2; // 返回bytes数组
 }
