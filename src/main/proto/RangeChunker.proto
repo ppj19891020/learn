@@ -5,7 +5,12 @@ option java_package = "com.demo.grpc.rangechunker";
 option java_outer_classname = "FileRangeChunker";
 
 service RangeChunker {
+  // 客户端单线程下载
   rpc Range(RangeRequest) returns (RangeChunkResponse) {}
+
+  // 客户端多线程下载
+  rpc GetFileSize(FileSizeRequest) returns (FileSizeResponse){}
+  rpc RangeRegion(RangeRegionRequest) returns (stream RangeRegionResponse){}
 }
 
 message RangeRequest {
@@ -19,3 +24,21 @@ message RangeChunkResponse {
   int64 nextposition = 3;
 }
 
+// 客户端多线程下载
+message FileSizeRequest{
+  string fileName = 1;
+}
+
+message FileSizeResponse{
+  int32 size = 1;
+}
+
+message RangeRegionRequest{
+  string fileName = 1;
+  int32 start = 2;
+  int32 end = 3;
+}
+
+message RangeRegionResponse{
+  bytes chunk = 1;
+}

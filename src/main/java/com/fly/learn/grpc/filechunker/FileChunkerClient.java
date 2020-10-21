@@ -60,7 +60,6 @@ public class FileChunkerClient {
         while (responseIterator.hasNext()){
             ChunkResponse chunkResponse = responseIterator.next();
             System.out.println(Thread.currentThread().getName()+"-"+chunkResponse.getBatchid());
-
             buf.clear();
             buf.put(chunkResponse.getChunk().toByteArray());
             buf.flip();
