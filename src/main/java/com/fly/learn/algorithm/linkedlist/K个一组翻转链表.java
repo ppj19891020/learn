@@ -39,8 +39,46 @@ public class K个一组翻转链表 {
         ListNode temp = new ListNode(0);
         temp.next = head;
         ListNode pre = temp;
+        while (null != head) {
+            // 尾部
+            ListNode tail = pre;
+            for (int i = 0; i < k; i++) {
+                tail = tail.next;
+                if (tail == null) {
+                    // 表示不足k个，直接返回
+                    return temp.next;
+                }
+            }
 
-        return null;
+            // 下一组的开头
+            ListNode next = tail.next;
+            ListNode[] reverse = reverseListNode(head,tail);
+            head = reverse[0];
+            tail = reverse[1];
+
+            // 重新组装链表
+            pre.next = head;
+            tail.next = next;
+
+            pre = tail;
+            head = tail.next;
+        }
+        return temp.next;
+    }
+
+    /**
+     * 反转链表
+     */
+    public ListNode[] reverseListNode(ListNode head, ListNode tail) {
+        ListNode prev = tail.next;
+        ListNode p = head;
+        while (prev != tail){
+            ListNode nex = p.next;
+            p.next = prev;
+            prev = p;
+            p = nex;
+        }
+        return new ListNode[]{tail, head};
     }
 
 }
