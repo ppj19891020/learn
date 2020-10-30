@@ -1,12 +1,7 @@
 package com.fly.learn.clob;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Reader;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +35,7 @@ public class ClobTest {
         //获取数据库连接池对象
         dataSource = DruidDataSourceFactory.createDataSource(pro);
 
-        int loopSize = 1000000;
+        int loopSize = 5000;
         long start = System.currentTimeMillis();
         List<Future<Boolean>> list = new ArrayList<>(loopSize);
         String bigText = query();
@@ -97,6 +92,7 @@ public class ClobTest {
         PreparedStatement ps = null;
         try {
             conn = dataSource.getConnection();
+            long start = System.currentTimeMillis();
             String sql = "insert into source.big_table_test_source(pic1,pic2,pic3,pic4) VALUES(?,?,?,?);";
             ps = conn.prepareStatement(sql);
             ps.setString(1, longText);
@@ -104,6 +100,8 @@ public class ClobTest {
             ps.setString(3, longText);
             ps.setString(4, longText);
             ps.executeUpdate();
+            long end = System.currentTimeMillis();
+            LOGGER.info("thread-name:{} 耗时:{}",Thread.currentThread().getName(),end-start);
         } catch (SQLException e) {
             e.printStackTrace();
         }
