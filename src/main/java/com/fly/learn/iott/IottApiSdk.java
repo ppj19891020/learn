@@ -17,10 +17,10 @@ import com.aliyuncs.profile.IClientProfile;
 public class IottApiSdk {
 
     private DefaultAcsClient client;
-    private String accessKey = "LTAI4G2QBpZ3szaeeXPsDCTL";
-    private String accessSecret = "lcCTa8hXNt83fwRf00u0oHDFyN1Euu";
-    private String productKey = "a18rh1f6UlM";
-    private String deviceName = "SgfjalhnfYNfq4i075Wo";
+    private String accessKey = "";
+    private String accessSecret = "";
+    private String productKey = "";
+    private String deviceName = "";
     /**
      * 初始化
      */
