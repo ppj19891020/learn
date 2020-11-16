@@ -35,16 +35,26 @@ public class ClobTest {
         //获取数据库连接池对象
         dataSource = DruidDataSourceFactory.createDataSource(pro);
 
-        int loopSize = 5000;
+        int size = 500*1024;
+        int loopSize = 100000;
         long start = System.currentTimeMillis();
         List<Future<Boolean>> list = new ArrayList<>(loopSize);
-        String bigText = query();
+        // 1k 数据
+        StringBuffer temp = new StringBuffer();
+        for(int i=0;i<1000;i++){
+            temp.append('a');
+        }
+        StringBuffer bigText = new StringBuffer();
+        for(int i=0;i<size/1024;i++){
+            bigText.append(temp);
+        }
+
         LOGGER.info("big text:{}",bigText.length());
         for(int i=0;i<loopSize;i++){
             list.add(executorService.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    insertString(bigText);
+                    insertString(bigText.toString());
                     return true;
                 }
             }));
@@ -68,7 +78,7 @@ public class ClobTest {
         ResultSet rs=null;
         try {
             conn = dataSource.getConnection();
-            String sql="select html from insight_sync.drug_html limit 100";
+            String sql="select html from insight_sync.drug_html limit 1";
             ps=conn.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
@@ -96,9 +106,9 @@ public class ClobTest {
             String sql = "insert into source.big_table_test_source(pic1,pic2,pic3,pic4) VALUES(?,?,?,?);";
             ps = conn.prepareStatement(sql);
             ps.setString(1, longText);
-            ps.setString(2, longText);
-            ps.setString(3, longText);
-            ps.setString(4, longText);
+            ps.setString(2, "");
+            ps.setString(3, "");
+            ps.setString(4, "");
             ps.executeUpdate();
             long end = System.currentTimeMillis();
             LOGGER.info("thread-name:{} 耗时:{}",Thread.currentThread().getName(),end-start);
