@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class ClobTest {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClobTest.class);
     private static DataSource dataSource;
-    private static ExecutorService executorService = Executors.newFixedThreadPool(36);
+    private static ExecutorService executorService = Executors.newFixedThreadPool(50);
 
     public static void main(String[] args) throws Exception{
         //创建Properties对象，用于加载配置文件
@@ -35,8 +35,8 @@ public class ClobTest {
         //获取数据库连接池对象
         dataSource = DruidDataSourceFactory.createDataSource(pro);
 
-        int size = 500*1024;
-        int loopSize = 100000;
+        int size = 1024*1024;
+        int loopSize = 100000 - 17144;
         long start = System.currentTimeMillis();
         List<Future<Boolean>> list = new ArrayList<>(loopSize);
         // 1k 数据
