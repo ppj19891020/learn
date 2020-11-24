@@ -1,4 +1,6 @@
-package com.fly.learn.algorithm;
+package com.fly.learn.algorithm.二叉树;
+
+import com.fly.learn.algorithm.二叉树.TreeNode;
 
 /**
  * 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
