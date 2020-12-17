@@ -1,6 +1,7 @@
 package com.fly.learn.algorithm.hashmap;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -72,11 +73,35 @@ public class 单词规律 {
         return i >= m;
     }
 
+    public boolean wordPattern2(String pattern, String s) {
+        String[] str = s.split(" ");
+        if(pattern.length() != str.length){
+            return false;
+        }
+        Map<Character,String> map = new HashMap<>();
+        HashSet<String> set = new HashSet<>();
+        for(int i=0;i<pattern.length();i++){
+            Character character = pattern.charAt(i);
+            if(map.containsKey(character)){
+                if(!map.get(character).equals(str[i])){
+                    return false;
+                }
+            }else{
+                if(set.contains(str[i])){
+                    return false;
+                }
+                map.put(character,str[i]);
+                set.add(str[i]);
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         String pattern = "abba";
         String str = "dog cat cat dog";
         单词规律 test = new 单词规律();
-        test.wordPattern(pattern,str);
+        test.wordPattern2(pattern,str);
     }
 
 }
