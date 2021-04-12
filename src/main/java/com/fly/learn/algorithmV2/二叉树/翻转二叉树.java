@@ -61,4 +61,22 @@ public class 翻转二叉树 {
         return root;
     }
 
+    /**
+     * 前序递归遍历
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree1(TreeNode root) {
+        if(null == root){
+            return null;
+        }
+        // 前序遍历直接交换它的左右子节点
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+        invertTree1(root.left);
+        invertTree1(root.right);
+        return root;
+    }
+
 }
