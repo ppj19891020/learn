@@ -7,13 +7,13 @@ package com.fly.learn.algorithmV2.二叉树;
  */
 public class TreeNode {
 
-    int val;
+    public int val;
 
-    TreeNode left;
+    public TreeNode left;
 
-    TreeNode right;
+    public TreeNode right;
 
-     TreeNode(int x) {
+    TreeNode(int x) {
          val = x;
      }
 
